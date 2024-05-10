@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const ConnectDB = require('./db/db');
 const foodRouter = require('./routes/food.route');
+const donatorRouter = require('./routes/donator.route');
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/foods', foodRouter);
+app.use('/donators', donatorRouter)
 
 
 // error handling

@@ -1,4 +1,5 @@
-const Food = require("../models/food.model")
+const Donator = require("../models/donator.model");
+const Food = require("../models/food.model");
 
 // create food card
 
@@ -18,7 +19,7 @@ const createFoodCard = async (req, res) => {
 // get all foods
 const getFoods = async (req, res) => {
  try {
-  const foods = await Food.find()
+  const foods = await Food.find({}).populate({path: 'donator', model:Donator}).exec()
   res.status(200).json(foods)
  } catch (err) {
     res.status(500).json({

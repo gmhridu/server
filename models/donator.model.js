@@ -1,3 +1,4 @@
+// donator.model.js
 const mongoose = require('mongoose');
 
 const donatorSchema = new mongoose.Schema({
@@ -13,10 +14,6 @@ const donatorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  posts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Food'
-  }]
 }, { timestamps: true });
 
 const Donator = mongoose.model('Donator', donatorSchema);

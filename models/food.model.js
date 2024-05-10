@@ -24,7 +24,7 @@ const foodSchema = new mongoose.Schema({
   additionalNotes: String,
   donator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Donator'
+    ref: 'Donator' 
   },
   foodStatus: {
     type: String,
@@ -34,13 +34,10 @@ const foodSchema = new mongoose.Schema({
   requestDate: {
     type: Date,
     default: Date.now
-  },
-  foodId: {
-    type: String,
-    required: true
   }
 }, { timestamps: true });
 
-const Food = mongoose.model('Food', foodSchema, 'foods');
+const Food = mongoose.model('Food', foodSchema);
 
 module.exports = Food;
+
