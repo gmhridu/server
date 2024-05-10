@@ -1,7 +1,6 @@
-
-// create food post
-
 const Food = require("../models/food.model")
+
+// create food card
 
 const createFoodCard = async (req, res) => {
  try {
