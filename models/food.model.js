@@ -23,13 +23,23 @@ const foodSchema = new mongoose.Schema({
   },
   additionalNotes: String,
   donator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Donator' 
+    email: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    }
   },
   foodStatus: {
     type: String,
-    enum: ['available', 'not available'],
-    default: 'available'
+    enum: ['Available', 'Not Available'],
+    default: 'Available'
   },
   requestDate: {
     type: Date,

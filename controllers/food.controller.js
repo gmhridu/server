@@ -19,7 +19,7 @@ const createFoodCard = async (req, res) => {
 // get all foods
 const getFoods = async (req, res) => {
  try {
-  const foods = await Food.find({}).populate({path: 'donator', model:Donator}).exec()
+  const foods = await Food.find()
   res.status(200).json(foods)
  } catch (err) {
     res.status(500).json({
