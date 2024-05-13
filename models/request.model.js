@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Food = require('./food.model');
 
 const reqSchema = new mongoose.Schema({
   foodName: {
@@ -22,20 +23,7 @@ const reqSchema = new mongoose.Schema({
     required: true
   },
   additionalNotes: String,
-  donator: {
-    email: {
-      type: String,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    image: {
-      type: String,
-      required: true
-    }
-  },
+  donatorEmail: String,
   foodStatus: {
     type: String,
     enum: ['Available', 'Not Available'],
@@ -44,7 +32,8 @@ const reqSchema = new mongoose.Schema({
   requestDate: {
     type: Date,
     default: Date.now
-  }
+  },
+  email: String,
 }, { timestamps: true });
 
 const Request = mongoose.model('Request', reqSchema);

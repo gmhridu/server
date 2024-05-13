@@ -1,10 +1,10 @@
+const Food = require("../models/food.model");
 const Request = require("../models/request.model");
 
 const requestedFood = async (req, res) => {
   try {
-    const body = req.body;
-
-    const reqFood = new Request(body);
+    const requestBody = req.body;
+    const reqFood = new Request(requestBody);
     const saveReqFood = await reqFood.save();
     res.status(200).json(saveReqFood);
   } catch (error) {
@@ -14,15 +14,16 @@ const requestedFood = async (req, res) => {
 
 const getAllReqFood = async (req, res) => {
   try {
-    const foodDetails = await Request.find();
+    const foodDetails = await Request.find()
     res.status(200).json(foodDetails);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
+
 
 const getReqFood = async (req, res) => {
-   try {
+  try {
     const foodId = req.params.id;
     const foodDetails = await Request.findById(foodId);
     if (!foodDetails) {
@@ -35,18 +36,18 @@ const getReqFood = async (req, res) => {
 };
 
 const getFoodDetailsByEmail = async (req, res) => {
-     try {
-        const  email  = req.params.email;
-        const foodDetails = await Request.find({ "donator.email": email })
-        res.status(200).json(foodDetails);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const email = req.params.email;
+    const foodDetails = await Request.find({ "donator.email": email });
+    res.status(200).json(foodDetails);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = {
   requestedFood,
   getAllReqFood,
- getReqFood,
+  getReqFood,
   getFoodDetailsByEmail,
 };
