@@ -32,7 +32,8 @@ const getFoods = async (req, res) => {
 // get food by id
 const foodById = async (req, res) => {
   try {
-    const food = await Food.findById(req.params.id)
+    const id = req.params.id
+    const food = await Food.findById({_id: id})
     res.status(200).json(food)
   } catch (err) {
     res.status(500).json({
@@ -89,6 +90,31 @@ const getDataCount = async (req, res) => {
   }
 };
 
+// get My Food List
+const myFoods = async (req, res) => {
+   try {
+    const { email } = req.params;
+    const foods = await Food.find({ 'donator.email': email });
+    res.status(200).json(foods);
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+}
 
 
-module.exports = {createFoodCard, getFoods, foodById, getPagination, getDataCount}
+const myRequest = async (req, res) => {
+   try {
+    const { email } = req.query;
+    const reqFoods = await Food.find({'donator.email': email});
+    res.status(200).json(reqFoods);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+
+module.exports = {createFoodCard, getFoods, foodById, getPagination, getDataCount, myFoods, myRequest}
