@@ -1,5 +1,6 @@
 const express = require('express');
 const { requestedFood, getReqFood, getFoodDetailsByEmail, getAllReqFood } = require('../controllers/request.controll');
+const verifyToken = require('../middleware/verifyCookie.middleware');
 
 const reqRouter = express.Router()
 

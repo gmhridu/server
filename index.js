@@ -51,6 +51,16 @@ app.post('/jwt', async(req, res)=> {
 })
 
 
+app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+    maxAge: 0,
+  });
+  res.status(200).json({ message: "Logged out successfully" });
+});
+
 
 // routes
 app.get('/', (req, res) => {
