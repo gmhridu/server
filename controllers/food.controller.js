@@ -118,7 +118,7 @@ const myRequest = async (req, res) => {
 // update food card
 const updateFood = async (req, res) => {
   try {
-    const { id } = req.params;
+    const foodId = req.params.id;
     const body = req.body;
     const options = {
       new: true,
@@ -129,17 +129,18 @@ const updateFood = async (req, res) => {
     const update = {
       $set: {
         ...body,
-      }
-    }
+      },
+    };
 
-    const food = await Food.findByIdAndUpdate({_id: id}, update, options)
+    const food = await Food.findByIdAndUpdate(foodId, update, options);
+    res.status(200).json(food);
   } catch (err) {
     res.status(500).json({
       status: "error",
       message: err.message,
     });
   }
-}
+};
 
 // delete food card
 const deleteFood = async(req, res) => {
