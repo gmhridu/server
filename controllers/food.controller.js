@@ -115,6 +115,46 @@ const myRequest = async (req, res) => {
   }
 }
 
+// update food card
+const updateFood = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const options = {
+      new: true,
+      runValidators: true,
+      upsert: true,
+    };
+
+    const update = {
+      $set: {
+        ...body,
+      }
+    }
+
+    const food = await Food.findByIdAndUpdate({_id: id}, update, options)
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+}
+
+// delete food card
+const deleteFood = async(req, res) => {
+  try {
+    const { id } = req.params;
+    const food = await Food.findByIdAndDelete({_id: id})
+    res.status(200).json(food)
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+}
 
 
-module.exports = {createFoodCard, getFoods, foodById, getPagination, getDataCount, myFoods, myRequest}
+
+module.exports = {createFoodCard, getFoods, foodById, getPagination, getDataCount, myFoods, myRequest, updateFood, deleteFood}
