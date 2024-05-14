@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken')
 const ConnectDB = require('./db/db');
 const foodRouter = require('./routes/food.route');
 const donatorRouter = require('./routes/donator.route');
@@ -27,6 +28,29 @@ app.use(cookieParser());
 
 // connect mongodb
 ConnectDB(mongoUri);
+
+
+// jwt
+app.post('/jwt', async(req, res)=> {
+  try{
+    const user = req.body;
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '30d',
+    });
+    res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      })
+      .send({ success: true });
+  }catch(error){
+    res.status(500).json({ message: error.message });
+  }
+})
+
+
 
 // routes
 app.get('/', (req, res) => {
