@@ -18,6 +18,7 @@ const corsOptions = {
     "http://localhost:5173",
     "https://nourishhub-e6cf5.web.app/",
     "https://nourishhub-e6cf5.firebaseapp.com/",
+    "https://noruishhub-server-eqneirndx-golam-mahabub-redoys-projects.vercel.app/",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -35,24 +36,25 @@ ConnectDB(mongoUri);
 
 
 // jwt
-app.post('/jwt', async(req, res)=> {
-  try{
+app.post("/jwt", async (req, res) => {
+  try {
     const user = req.body;
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '30d',
+      expiresIn: "30d",
     });
     res
       .status(200)
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        sameSite: "none",
       })
       .send({ success: true });
-  }catch(error){
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-})
+});
+
 
 
 app.get("/logout", (req, res) => {
