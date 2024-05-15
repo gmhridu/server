@@ -16,9 +16,9 @@ const mongoUri = process.env.MONGO_URI;
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://nourishhub-e6cf5.web.app/",
-    "https://nourishhub-e6cf5.firebaseapp.com/",
-    "https://noruishhub-server-eqneirndx-golam-mahabub-redoys-projects.vercel.app/",
+    "https://nourishhub-e6cf5.web.app",
+    "https://nourishhub-e6cf5.firebaseapp.com",
+    "https://noruishhub-server-golam-mahabub-redoys-projects.vercel.app",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -34,37 +34,29 @@ app.use(cookieParser());
 // connect mongodb
 ConnectDB(mongoUri);
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+};
+
 
 // jwt
 app.post("/jwt", async (req, res) => {
-  try {
-    const user = req.body;
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "30d",
-    });
-    res
-      .status(200)
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
-      })
-      .send({ success: true });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  const user = req.body;
+  console.log("user for token", user);
+  const token = jwt.sign(user, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+  res.cookie("token", token, cookieOptions).send({success:true});
 });
 
 
 
-app.get("/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-    maxAge: 0,
-  });
-  res.status(200).json({ message: "Logged out successfully" });
+app.post("/logout", (req, res) => {
+  const user = req.body;
+  console.log("user for logout", user);
+  res.clearCookie("token", {...cookieOptions, maxAge:0}).send({success:true});
 });
 
 
