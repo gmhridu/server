@@ -54,9 +54,9 @@ app.post("/jwt", async (req, res) => {
 
 
 app.post("/logout", (req, res) => {
-  const user = req.body;
-  console.log("user for logout", user);
-  res.clearCookie("token", {...cookieOptions, maxAge:0}).send({success:true});
+  res
+    .clearCookie("token", { ...cookieOptions, maxAge: 0 })
+    .send({ success: true });
 });
 
 
