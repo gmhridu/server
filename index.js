@@ -14,10 +14,14 @@ const port = process.env.PORT || 9000;
 const mongoUri = process.env.MONGO_URI;
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    "http://localhost:5173",
+    "https://nourishhub-e6cf5.web.app/",
+    "https://nourishhub-e6cf5.firebaseapp.com/",
+  ],
   credentials: true,
-  optionSuccessStatus: 200
-}
+  optionSuccessStatus: 200,
+};
 
 const app = express();
 
