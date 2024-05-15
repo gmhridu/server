@@ -45,7 +45,7 @@ const cookieOptions = {
 app.post("/jwt", async (req, res) => {
   const user = req.body;
   console.log("user for token", user);
-  const token = jwt.sign(user, process.env.JWT_SECRET, {
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "30d",
   });
   res.cookie("token", token, cookieOptions).send({success:true});

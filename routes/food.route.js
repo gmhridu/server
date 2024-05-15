@@ -10,7 +10,7 @@ foodRouter.post('/', createFoodCard)
 
 foodRouter.get('/', getFoods)
 
-foodRouter.get("/my-food/:email", verifyToken, myFoods);
+foodRouter.get("/my-food/:email",verifyToken, myFoods);
 
 foodRouter.get("/my-requests/:email", verifyToken, myRequest);
 
